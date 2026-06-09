@@ -83,18 +83,7 @@ async def _controls(_, query: types.CallbackQuery):
 
         queue.force_add(chat_id, media, remove=pos)
 
-        msg = None
-        if media.message_id:
-            try:
-                msg = await app.get_messages(chat_id, media.message_id)
-                if not msg or not msg.id or msg.empty:
-                    msg = None
-            except Exception:
-                msg = None
-
-        if not msg:
-            msg = await app.send_message(chat_id=chat_id, text=query.lang["play_next"])
-
+        msg = query.message
         if not media.file_path:
             media.file_path = await yt.download(media.id, video=media.video)
 

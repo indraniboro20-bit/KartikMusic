@@ -186,6 +186,11 @@ class TgCall(PyTgCalls):
                 msg = await app.get_messages(chat_id, media.message_id)
                 if not msg or not msg.id or msg.empty:
                     msg = None
+                else:
+                    try:
+                        await msg.edit_text(_lang["play_next"])
+                    except Exception:
+                        pass
             except Exception:
                 msg = None
 
