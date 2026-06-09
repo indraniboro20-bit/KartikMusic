@@ -3,6 +3,7 @@
 # This file is part of AnonXMusic
 
 
+import time
 from pyrogram import filters, types
 
 from anony import anon, app, db, lang, queue
@@ -38,9 +39,11 @@ async def audio_effects(_, m: types.Message):
 
     sent = await m.reply_text(m.lang["applying_effect"].format(command))
 
-    # We use media.time to restart from the last seek point or start.
-    # While not perfect without real-time tracking, it's the current behavior for seek.
-    await anon.play_media(m.chat.id, sent, media, media.time)
+    current_time = media.time
+    if media.played_at:
+        current_time += int(time.time() - media.played_at)
+
+    await anon.play_media(m.chat.id, sent, media, current_time)
 
     await sent.edit_text(
         m.lang["effect_applied"].format(command, m.from_user.mention)

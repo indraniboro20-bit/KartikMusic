@@ -3,6 +3,7 @@
 # This file is part of AnonXMusic
 
 
+import time
 from pyrogram import filters, types
 
 from anony import anon, app, db, lang, queue
@@ -34,14 +35,19 @@ async def _seek(_, m: types.Message):
         return await m.reply_text(m.lang["play_seek_no_dur"])
 
     sent = await m.reply_text(m.lang["play_seeking"])
+
+    current_time = media.time
+    if media.played_at:
+        current_time += int(time.time() - media.played_at)
+
     if m.command[0] == "seekback":
         stype = m.lang["backward"]
-        start_from = media.time - to_seek
+        start_from = current_time - to_seek
         if start_from < 1:
             start_from = 1
     else:
         stype = m.lang["forward"]
-        start_from = media.time + to_seek
+        start_from = current_time + to_seek
         if start_from + 10 > media.duration_sec:
             start_from = media.duration_sec - 5
 

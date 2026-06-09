@@ -3,6 +3,7 @@
 # This file is part of AnonXMusic
 
 
+import time
 from ntgcalls import (ConnectionNotFound, TelegramServerError,
                       RTMPStreamingUnsupported, ConnectionError)
 from pyrogram.errors import (ChatSendMediaForbidden, ChatSendPhotosForbidden,
@@ -19,15 +20,27 @@ from anony.helpers import Media, Track, buttons
 class TgCall(PyTgCalls):
     def __init__(self):
         self.clients = []
+        self.restarting = set()
 
     async def pause(self, chat_id: int) -> bool:
         client = await db.get_assistant(chat_id)
         await db.playing(chat_id, paused=True)
+
+        media = queue.get_current(chat_id)
+        if media and media.played_at:
+            media.time += int(time.time() - media.played_at)
+            media.played_at = None
+
         return await client.pause(chat_id)
 
     async def resume(self, chat_id: int) -> bool:
         client = await db.get_assistant(chat_id)
         await db.playing(chat_id, paused=False)
+
+        media = queue.get_current(chat_id)
+        if media:
+            media.played_at = time.time()
+
         return await client.resume(chat_id)
 
     async def stop(self, chat_id: int) -> None:
@@ -49,6 +62,7 @@ class TgCall(PyTgCalls):
         media: Media | Track,
         seek_time: int = 0,
     ) -> None:
+        self.restarting.add(chat_id)
         client = await db.get_assistant(chat_id)
         _lang = await lang.get_lang(chat_id)
         _thumb_mode = await db.get_thumb_mode(chat_id)
@@ -88,6 +102,7 @@ class TgCall(PyTgCalls):
                 stream=stream,
                 config=types.GroupCallConfig(auto_start=False),
             )
+            media.played_at = time.time()
             if not seek_time:
                 media.time = 1
                 await db.add_call(chat_id)
@@ -139,6 +154,8 @@ class TgCall(PyTgCalls):
         except RTMPStreamingUnsupported:
             await self.stop(chat_id)
             await message.edit_text(_lang["error_rtmp"])
+        finally:
+            self.restarting.discard(chat_id)
 
 
     async def replay(self, chat_id: int) -> None:
@@ -196,6 +213,8 @@ class TgCall(PyTgCalls):
         async def update_handler(_, update: types.Update) -> None:
             if isinstance(update, types.StreamEnded):
                 if update.stream_type == types.StreamEnded.Type.AUDIO:
+                    if update.chat_id in self.restarting:
+                        return
                     await self.play_next(update.chat_id)
             elif isinstance(update, types.ChatUpdate):
                 if update.status in [
