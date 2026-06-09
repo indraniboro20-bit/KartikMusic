@@ -89,21 +89,18 @@ class TgCall(PyTgCalls):
             + (f"-af {media.filter}" if media.filter else "")
         ).strip()
 
-        if media.video:
-            stream = types.MediaStream(
-                media_path=media.file_path,
-                audio_parameters=types.AudioQuality.HIGH,
-                video_parameters=types.VideoQuality.HD_720p,
-                audio_flags=types.MediaStream.Flags.REQUIRED,
-                video_flags=types.MediaStream.Flags.AUTO_DETECT,
-                ffmpeg_parameters=ffmpeg_params or None,
-            )
-        else:
-            stream = types.AudioPiped(
-                media_path=media.file_path,
-                audio_parameters=types.AudioQuality.HIGH,
-                ffmpeg_parameters=ffmpeg_params or None,
-            )
+        stream = types.MediaStream(
+            media_path=media.file_path,
+            audio_parameters=types.AudioQuality.HIGH,
+            video_parameters=types.VideoQuality.HD_720p,
+            audio_flags=types.MediaStream.Flags.REQUIRED,
+            video_flags=(
+                types.MediaStream.Flags.AUTO_DETECT
+                if media.video
+                else types.MediaStream.Flags.IGNORE
+            ),
+            ffmpeg_parameters=ffmpeg_params or None,
+        )
 
         try:
             if await db.get_call(chat_id):
