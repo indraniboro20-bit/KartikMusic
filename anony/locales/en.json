@@ -97,6 +97,7 @@
     "autoplay_off": "<b>Autoplay disabled by</b> {0}",
     "vclog_on": "<b>VC Logger enabled by</b> {0}",
     "vclog_off": "<b>VC Logger disabled by</b> {0}",
+    "vclog_usage": "<b>Usage:</b>\n\n<code>/{0} [on|off]</code>",
     "vclog_joined": "#JᴏɪɴVɪᴅᴇᴏCʜᴀᴛ\n<b>Nᴀᴍᴇ :</b> {0}\n<b>ɪᴅ :</b> <code>{1}</code>\n<b>Aᴄᴛɪᴏɴ :</b> Jᴏɪɴᴇᴅ",
     "vclog_left": "#LᴇᴀᴠᴇVɪᴅᴇᴏCʜᴀᴛ\n<b>Nᴀᴍᴇ :</b> {0}\n<b>ɪᴅ :</b> <code>{1}</code>\n<b>Aᴄᴛɪᴏɴ :</b> Lᴇғᴛ",
     "play_duration_limit": "Streams longer than {0} minutes are not allowed to play.",
