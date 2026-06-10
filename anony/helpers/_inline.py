@@ -116,6 +116,19 @@ class Inline:
 
         return self.ikm(rows)
 
+    def song_markup(self, vid_id: str) -> types.InlineKeyboardMarkup:
+        return self.ikm(
+            [
+                [
+                    self.ikb(text="Audio 🎵", callback_data=f"song_download audio {vid_id}"),
+                    self.ikb(text="Video 🎬", callback_data=f"song_download video {vid_id}"),
+                ],
+                [
+                    self.ikb(text="Close ✘", callback_data="help close"),
+                ],
+            ]
+        )
+
     def lang_markup(self, _lang: str) -> types.InlineKeyboardMarkup:
         langs = lang.get_languages()
 

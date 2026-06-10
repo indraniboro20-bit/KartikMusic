@@ -3,6 +3,7 @@
 # This file is part of AnonXMusic
 
 
+import os
 import re
 import time
 from pyrogram import enums, errors, filters, types
@@ -216,6 +217,55 @@ async def _help(_, query: types.CallbackQuery):
             await query.edit_message_text(text=_text, reply_markup=_key)
     except Exception:
         pass
+
+
+@app.on_callback_query(filters.regex("song_download") & ~app.bl_users)
+@lang.language()
+async def song_download_cb(_, query: types.CallbackQuery):
+    args = query.data.split()
+    dl_type, vid_id = args[1], args[2]
+
+    await query.answer(query.lang["play_downloading"], show_alert=True)
+
+    # We edit the message to show downloading status on the caption to keep it tidy
+    try:
+        await query.edit_message_caption(
+            caption=f"{query.message.caption}\n\n<b>Downloading...</b>",
+            reply_markup=query.message.reply_markup
+        )
+    except Exception:
+        pass
+
+    url = await yt.download(vid_id, video=dl_type == "video")
+    if not url:
+        return await query.message.reply_text(query.lang["error_no_file"].format("support chat"))
+
+    file_path = None
+    if not url.startswith(("http://", "https://")):
+        file_path = url
+
+    try:
+        if dl_type == "audio":
+            await query.message.reply_audio(
+                audio=url,
+                caption=f"<b>Downloaded via {app.name}</b>"
+            )
+        else:
+            await query.message.reply_video(
+                video=url,
+                caption=f"<b>Downloaded via {app.name}</b>"
+            )
+
+        # Cleanup status message
+        await query.edit_message_caption(
+            caption=query.message.caption.split("\n\n<b>Downloading...</b>")[0],
+            reply_markup=query.message.reply_markup
+        )
+    except Exception as e:
+        await query.message.reply_text(f"<b>Failed to send file.</b>\n\n<b>Error:</b> <code>{e}</code>")
+    finally:
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
 
 
 @app.on_callback_query(filters.regex("settings") & ~app.bl_users)
