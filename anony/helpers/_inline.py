@@ -43,13 +43,13 @@ class Inline:
                 _off = "Disabled ❌"
                 keyboard.append(
                     [
-                        self.ikb(text="Autoplay", callback_data=f"controls status {chat_id}"),
+                        self.ikb(text="Autoplay", callback_data="help autoplay"),
                         self.ikb(text=_on if autoplay else _off, callback_data=f"controls cautoplay {chat_id}"),
                     ]
                 )
                 keyboard.append(
                     [
-                        self.ikb(text="Thumbnail", callback_data=f"controls status {chat_id}"),
+                        self.ikb(text="Thumbnail", callback_data="help thumb"),
                         self.ikb(text=_on if thumb else _off, callback_data=f"controls cthumb {chat_id}"),
                     ]
                 )
@@ -89,7 +89,7 @@ class Inline:
                 ]
             ]
         else:
-            cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo", "thumb", "vclog"]
+            cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo", "thumb", "vclog", "autoplay"]
             buttons = [
                 self.ikb(text=_lang[f"help_{i}"], callback_data=f"help {cb}")
                 for i, cb in enumerate(cbs)
