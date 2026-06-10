@@ -168,5 +168,5 @@
     "help_8": "Sudoers",
     "help_9": "Thumbnail",
     "help_10": "VC Logger",
-    "help_thumb": "<u><b>Thumbnail commands:</b></u>\n\n/thumb: Toggles the thumbnail on/off for the chat."
+    "help_thumb": "<u><b>Thumbnail commands:</b></u>\n\n/nothumb: thumbnail on/off for the chat."
 }
