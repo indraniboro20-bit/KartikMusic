@@ -171,8 +171,8 @@ class Inline:
             rows += [
                 [
                     self.ikb(
-                        text=lang["owner"],
-                        url=f"tg://user?id={config.OWNER_ID}",
+                        text="Owner",
+                        user_id=config.OWNER_ID,
                     )
                 ]
             ]
