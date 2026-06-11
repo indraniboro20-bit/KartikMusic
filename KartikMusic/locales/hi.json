@@ -170,5 +170,7 @@
     "help_9": "थंबनेल",
     "help_10": "VC लॉगर",
     "help_11": "ऑटोप्ले",
-    "help_thumb": "<u><b>थंबनेल आदेश:</b></u>\n\n/nothumb [enable|disable]: चैट के लिए थंबनेल चालू या बंद करें।"
-, "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️"}
+    "help_thumb": "<u><b>थंबनेल आदेश:</b></u>\n\n/nothumb [enable|disable]: चैट के लिए थंबनेल चालू या बंद करें।",
+    "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️",
+    "add_mee": "मुझे जोड़ें"
+}

@@ -151,5 +151,26 @@
     "help_5": "ဖွင့်ပါ",
     "help_6": "တန်းစီစာရင်း",
     "help_7": "အချက်အလက်",
-    "help_8": "Sudoers"
-, "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️"}
+    "help_8": "Sudoers",
+    "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️",
+    "help_autoplay": "<u><b>Autoplay commands:</b></u>\n\n/autoplay [enable|disable]: Toggles the autoplay on/off for the chat.",
+    "vclog_joined": "#JᴏɪɴVɪᴅᴇᴏCʜᴀᴛ\n<b>Nᴀᴍᴇ :</b> {0}\n<b>ɪᴅ :</b> <code>{1}</code>\n<b>Aᴄᴛɪᴏɴ :</b> Jᴏɪɴᴇᴅ",
+    "vclog_off": "<b>VC Logger disabled by</b> {0}",
+    "help_10": "VC Logger",
+    "vclogger": "VC Logger",
+    "thumb_off": "Thumbnail disabled.",
+    "autoplay": "Autoplay",
+    "autoplay_off": "<b>Autoplay disabled by</b> {0}",
+    "help_9": "Thumbnail",
+    "help_vclog": "<u><b>VC Logger commands:</b></u>\n\n/vclogger: Toggles the VC join/leave logger on/off for the chat.",
+    "vclog_usage": "<b>Usage:</b>\n\n<code>/{0} [on|off]</code>",
+    "owner": "Owner",
+    "help_thumb": "<u><b>Thumbnail commands:</b></u>\n\n/nothumb [enable|disable]: Toggles the thumbnail off/on for the chat.",
+    "vclog_left": "#LᴇᴀᴠᴇVɪᴅᴇᴏCʜᴀᴛ\n<b>Nᴀᴍᴇ :</b> {0}\n<b>ɪᴅ :</b> <code>{1}</code>\n<b>Aᴄᴛɪᴏɴ :</b> Lᴇғᴛ",
+    "thumbnail": "Thumbnail",
+    "help_11": "Autoplay",
+    "autoplay_on": "<b>Autoplay enabled by</b> {0}\n\nFrom now on, the bot will automatically play related music once the queue is empty.",
+    "add_mee": "Add me",
+    "thumb_on": "Thumbnail enabled.",
+    "vclog_on": "<b>VC Logger enabled by</b> {0}"
+}
