@@ -95,13 +95,9 @@ class TgCall(PyTgCalls):
         ffmpeg_params = (
             (f"-ss {seek_time} " if seek_time > 1 else "")
             + ("-vn " if not media.video else "")
+            + (f'-af "atempo={speed}" ' if speed != 1.0 and not media.video else "")
             + (
-                f'-af "atempo={speed}" '
-                if speed != 1.0 and not media.video
-                else ""
-            )
-            + (
-                f'-vf "setpts={1.0/speed}*PTS" -af "atempo={speed}" '
+                f'-vf "setpts={1.0 / speed}*PTS" -af "atempo={speed}" '
                 if speed != 1.0 and media.video
                 else ""
             )

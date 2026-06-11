@@ -17,6 +17,7 @@ from KartikMusic.helpers import buttons
 async def _ping(_, m: types.Message):
     start = time.time()
     sent = await m.reply_text(m.lang["pinging"])
+
     def get_time(s):
         return (
             lambda r: (
@@ -31,6 +32,7 @@ async def _ping(_, m: types.Message):
                 )
             ]
         )
+
     uptime = get_time(int(time.time() - boot))
     latency = round((time.time() - start) * 1000, 2)
     await sent.edit_media(

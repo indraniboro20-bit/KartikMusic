@@ -4,11 +4,11 @@
 
 
 import time
+
 from pyrogram import filters, types
 
 from KartikMusic import Kartik, app, db, lang, queue
 from KartikMusic.helpers import buttons, can_manage_vc
-
 
 checker = []
 
@@ -92,8 +92,14 @@ async def speed_cb(_, query: types.CallbackQuery):
         return await mystic.edit_text(
             query.lang["admin_33"],
             reply_markup=types.InlineKeyboardMarkup(
-                [[types.InlineKeyboardButton(query.lang["close"], callback_data="close")]]
-            )
+                [
+                    [
+                        types.InlineKeyboardButton(
+                            query.lang["close"], callback_data="close"
+                        )
+                    ]
+                ]
+            ),
         )
 
     if chat_id in checker:
@@ -103,5 +109,5 @@ async def speed_cb(_, query: types.CallbackQuery):
         text=query.lang["admin_34"].format(speed, query.from_user.mention),
         reply_markup=types.InlineKeyboardMarkup(
             [[types.InlineKeyboardButton(query.lang["close"], callback_data="close")]]
-        )
+        ),
     )
