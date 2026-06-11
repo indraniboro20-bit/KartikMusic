@@ -16,21 +16,15 @@ from anony.helpers import Media, Track
 class Thumbnail:
     def __init__(self):
         try:
-            self.font_title = ImageFont.truetype("anony/helpers/Raleway-Bold.ttf", 55)
-            self.font_artist = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 35)
-            self.font_time = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 25)
-            self.font_4k = ImageFont.truetype("anony/helpers/Raleway-Bold.ttf", 80)
-            self.font_overlay_artist = ImageFont.truetype("anony/helpers/Raleway-Bold.ttf", 60)
-            self.font_overlay_song = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 30)
+            self.font_title = ImageFont.truetype("anony/helpers/Raleway-Bold.ttf", 40)
+            self.font_artist = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 30)
+            self.font_time = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 22)
         except:
             self.font_title = ImageFont.load_default()
             self.font_artist = ImageFont.load_default()
             self.font_time = ImageFont.load_default()
-            self.font_4k = ImageFont.load_default()
-            self.font_overlay_artist = ImageFont.load_default()
-            self.font_overlay_song = ImageFont.load_default()
 
-    def _make_sq(self, im, radius=60):
+    def _make_sq(self, im, radius=80):
         """Creates a rounded square image."""
         mask = Image.new('L', im.size, 0)
         draw = ImageDraw.Draw(mask)
@@ -47,11 +41,11 @@ class Thumbnail:
             background = Image.new("RGB", (1280, 720), (20, 20, 20))
 
         background = background.resize((1280, 720))
-        background = background.filter(ImageFilter.GaussianBlur(radius=50))
+        background = background.filter(ImageFilter.GaussianBlur(radius=60))
 
         # Darken background
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.4)
+        background = enhancer.enhance(0.3)
 
         draw = ImageDraw.Draw(background)
 
@@ -62,121 +56,102 @@ class Thumbnail:
             thumb = Image.new("RGBA", (520, 520), (40, 40, 40, 255))
 
         thumb = thumb.resize((520, 520))
+        thumb = self._make_sq(thumb, radius=80)
+        background.paste(thumb, (90, 100), thumb)
 
-        # Add overlay on thumb
-        overlay = Image.new("RGBA", (520, 520), (0, 0, 0, 0))
-        overlay_draw = ImageDraw.Draw(overlay)
-        # Blueish translucent overlay on the left
-        overlay_draw.rectangle([0, 0, 220, 520], fill=(0, 70, 140, 210))
+        # 3. Text (Title & Artist)
+        x_start = 720
+        x_end = 1210
 
-        # Artist name on overlay
-        artist_upper = str(artist).upper()
-        y_off = 60
-        words = artist_upper.split()
-        for word in words[:3]:
-            if len(word) > 8: word = word[:8]
-            overlay_draw.text((30, y_off), word, font=self.font_overlay_artist, fill="white")
-            y_off += 70
+        # Max widths
+        max_title_width = 350
 
-        # Song title (small) on overlay
-        title_upper = str(title).upper()
-        title_lines = []
-        words = title_upper.split()
-        line = ""
-        for word in words:
-            if len(line + " " + word) < 15:
-                line += " " + word
-            else:
-                title_lines.append(line.strip())
-                line = word
-        title_lines.append(line.strip())
-
-        y_off += 10
-        for line in title_lines[:2]:
-            overlay_draw.text((30, y_off), line, font=self.font_overlay_song, fill=(220, 220, 220))
-            y_off += 40
-
-        # 4K text at the bottom
-        overlay_draw.text((30, 390), "4K", font=self.font_4k, fill="white")
-
-        thumb.alpha_composite(overlay)
-        thumb = self._make_sq(thumb, radius=60)
-        background.paste(thumb, (70, 100), thumb)
-
-        # 4. Text (Title & Artist)
         title = str(title)
-        artist = str(artist)
-        max_title_width = 450
         if draw.textbbox((0, 0), title, font=self.font_title)[2] > max_title_width:
             while draw.textbbox((0, 0), title + "...", font=self.font_title)[2] > max_title_width:
                 title = title[:-1]
             title += "..."
 
-        draw.text((630, 220), title, font=self.font_title, fill="white")
-        draw.text((630, 290), artist, font=self.font_artist, fill=(200, 200, 200))
+        artist = str(artist)
+        if draw.textbbox((0, 0), artist, font=self.font_artist)[2] > max_title_width:
+            while draw.textbbox((0, 0), artist + "...", font=self.font_artist)[2] > max_title_width:
+                artist = artist[:-1]
+            artist += "..."
 
-        # Star icon
+        draw.text((x_start, 160), title, font=self.font_title, fill="white")
+        draw.text((x_start, 215), artist, font=self.font_artist, fill=(180, 180, 180))
+
+        # Star and Dots icons
+        draw.ellipse([1100, 160, 1150, 210], fill=(255, 255, 255, 30))
         star_pts = [
-            (1130, 268), (1135, 280), (1148, 280), (1138, 288),
-            (1142, 301), (1130, 293), (1118, 301), (1122, 288),
-            (1112, 280), (1125, 280)
+            (1125, 172), (1128, 182), (1138, 182), (1130, 189),
+            (1134, 199), (1125, 193), (1116, 199), (1120, 189),
+            (1112, 182), (1122, 182)
         ]
         draw.polygon(star_pts, fill="white")
 
-        # Three dots (vertical)
-        draw.ellipse([1180, 265, 1186, 271], fill="white")
-        draw.ellipse([1180, 280, 1186, 286], fill="white")
-        draw.ellipse([1180, 295, 1186, 301], fill="white")
+        draw.ellipse([1170, 160, 1220, 210], fill=(255, 255, 255, 30))
+        for y in [175, 185, 195]:
+            draw.ellipse([1192, y, 1198, y+6], fill="white")
 
-        # 5. Progress Bar
-        bar_x_start = 630
-        bar_x_end = 1230
-        bar_y = 420
-        progress = 0.35
+        # 4. Progress Bar
+        bar_y = 300
+        progress = 0.1 # Dummy progress
+        draw.line([x_start, bar_y, x_end, bar_y], fill=(100, 100, 100), width=10)
+        current_x = x_start + (x_end - x_start) * progress
+        draw.line([x_start, bar_y, current_x, bar_y], fill=(220, 220, 220), width=10)
+        draw.ellipse([current_x - 10, bar_y - 10, current_x + 10, bar_y + 10], fill=(220, 220, 220))
 
-        draw.line([bar_x_start, bar_y, bar_x_end, bar_y], fill=(100, 100, 100), width=6)
-        current_x = bar_x_start + (bar_x_end - bar_x_start) * progress
-        draw.line([bar_x_start, bar_y, current_x, bar_y], fill="white", width=6)
-        draw.ellipse([current_x - 6, bar_y - 6, current_x + 6, bar_y + 6], fill="white")
+        # 5. Time Labels
+        draw.text((x_start, 330), "0:03", font=self.font_time, fill=(180, 180, 180))
+        draw.text((x_end - 60, 330), f"-{duration}", font=self.font_time, fill=(180, 180, 180))
 
-        # 6. Time Labels
-        draw.text((630, 440), "0:35", font=self.font_time, fill=(200, 200, 200))
-        draw.text((1180, 440), str(duration), font=self.font_time, fill=(200, 200, 200))
-
-        # 7. Controls
-        # Centered at 930
+        # 6. Controls
         y_ctrl = 520
         # Skip Back
-        draw.polygon([(790, y_ctrl + 30), (840, y_ctrl), (840, y_ctrl + 60)], fill="white")
-        draw.polygon([(740, y_ctrl + 30), (790, y_ctrl), (790, y_ctrl + 60)], fill="white")
+        draw.polygon([(820, y_ctrl), (770, y_ctrl - 25), (820, y_ctrl - 50)], fill="white")
+        draw.polygon([(770, y_ctrl), (720, y_ctrl - 25), (770, y_ctrl - 50)], fill="white")
+
         # Play/Pause
-        draw.rectangle([900, y_ctrl, 920, y_ctrl + 60], fill="white")
-        draw.rectangle([940, y_ctrl, 960, y_ctrl + 60], fill="white")
+        draw.rounded_rectangle([930, y_ctrl - 60, 950, y_ctrl + 10], radius=5, fill="white")
+        draw.rounded_rectangle([970, y_ctrl - 60, 990, y_ctrl + 10], radius=5, fill="white")
+
         # Skip Forward
-        draw.polygon([(1020, y_ctrl), (1070, y_ctrl + 30), (1020, y_ctrl + 60)], fill="white")
-        draw.polygon([(1070, y_ctrl), (1120, y_ctrl + 30), (1070, y_ctrl + 60)], fill="white")
+        draw.polygon([(1100, y_ctrl), (1150, y_ctrl - 25), (1100, y_ctrl - 50)], fill="white")
+        draw.polygon([(1150, y_ctrl), (1200, y_ctrl - 25), (1150, y_ctrl - 50)], fill="white")
 
-        # 8. Volume Bar
-        # Centered at 930
-        y_vol = 675
-        draw.polygon([(735, y_vol), (755, y_vol), (770, y_vol - 15), (770, y_vol + 15), (755, y_vol)], fill="white")
-        draw.polygon([(1105, y_vol), (1125, y_vol), (1140, y_vol - 15), (1140, y_vol + 15), (1125, y_vol)], fill="white")
-        draw.arc([1145, y_vol - 15, 1170, y_vol + 15], start=-60, end=60, fill="white", width=3)
-        draw.arc([1140, y_vol - 25, 1180, y_vol + 25], start=-60, end=60, fill="white", width=3)
-        draw.line([785, y_vol, 1090, y_vol], fill=(150, 150, 150), width=6)
-        draw.line([785, y_vol, 1010, y_vol], fill="white", width=6)
-        draw.ellipse([1004, y_vol - 6, 1016, y_vol + 6], fill="white")
+        # 7. Volume Bar
+        y_vol = 630
+        draw.line([x_start + 30, y_vol, x_end - 30, y_vol], fill=(100, 100, 100), width=8)
+        # Dummy volume 70%
+        draw.line([x_start + 30, y_vol, x_start + 30 + (x_end - x_start - 60) * 0.7, y_vol], fill="white", width=8)
+        draw.ellipse([x_start + 30 + (x_end - x_start - 60) * 0.7 - 8, y_vol - 8, x_start + 30 + (x_end - x_start - 60) * 0.7 + 8, y_vol + 8], fill="white")
 
-        # 9. Bottom Left Icons
-        y_icons = 665
-        draw.rounded_rectangle([630, y_icons, 660, y_icons + 20], radius=5, outline="white", width=2)
-        draw.polygon([(638, y_icons + 20), (645, y_icons + 20), (638, y_icons + 28)], fill="white")
-        draw.line([685, y_icons + 3, 705, y_icons + 3], fill="white", width=2)
-        draw.line([685, y_icons + 11, 705, y_icons + 11], fill="white", width=2)
-        draw.line([685, y_icons + 19, 705, y_icons + 19], fill="white", width=2)
-        draw.rectangle([678, y_icons + 2, 680, y_icons + 4], fill="white")
-        draw.rectangle([678, y_icons + 10, 680, y_icons + 12], fill="white")
-        draw.rectangle([678, y_icons + 18, 680, y_icons + 20], fill="white")
+        # Speaker icons
+        # Left
+        draw.polygon([(x_start, y_vol), (x_start + 10, y_vol - 8), (x_start + 10, y_vol + 8)], fill="white")
+        draw.rectangle([x_start - 10, y_vol - 5, x_start, y_vol + 5], fill="white")
+        # Right
+        draw.polygon([(x_end - 10, y_vol), (x_end, y_vol - 8), (x_end, y_vol + 8)], fill="white")
+        draw.rectangle([x_end - 20, y_vol - 5, x_end - 10, y_vol + 5], fill="white")
+        draw.arc([x_end + 2, y_vol - 8, x_end + 15, y_vol + 8], start=-60, end=60, fill="white", width=2)
+        draw.arc([x_end - 2, y_vol - 12, x_end + 20, y_vol + 12], start=-60, end=60, fill="white", width=2)
+
+        # 8. Bottom Icons
+        y_bottom = 690
+        # Quote bubble icon
+        draw.rounded_rectangle([800, y_bottom, 835, y_bottom + 25], radius=5, outline="white", width=2)
+        # draw a small "99" inside
+        try:
+            qfont = ImageFont.truetype("anony/helpers/Inter-Light.ttf", 15)
+        except:
+            qfont = ImageFont.load_default()
+        draw.text((809, y_bottom + 2), "99", font=qfont, fill="white")
+
+        # List icon
+        for i in range(3):
+            draw.line([1110, y_bottom + 5 + i*8, 1140, y_bottom + 5 + i*8], fill="white", width=3)
+            draw.ellipse([1100, y_bottom + 3 + i*8, 1104, y_bottom + 7 + i*8], fill="white")
 
         final_thumb = background.convert("RGB")
         out_path = f"cache/{videoid}.png"
