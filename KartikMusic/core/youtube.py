@@ -3,15 +3,16 @@
 # This file is part of KartikMusic
 
 
-import asyncio
 import os
-import random
 import re
-import urllib.parse
-
+import random
+import asyncio
 import aiohttp
-import httpx
-from py_yt import Playlist, Recommendations, VideosSearch
+import urllib.parse
+from pathlib import Path
+from typing import Union
+
+from py_yt import Playlist, VideosSearch, Recommendations
 
 from KartikMusic import logger
 from KartikMusic.helpers import Track, utils
@@ -112,23 +113,21 @@ class YouTube:
             async with client.get(f"{API_URL}/search", params=params) as response:
                 if response.status == 200:
                     result_data = await response.json()
-                result = result_data.get("result")
-                if result:
-                    data = result[0]
-                    return Track(
-                        id=data.get("id"),
-                        channel_name=data.get("channel", {}).get("name"),
-                        duration=data.get("duration"),
-                        duration_sec=utils.to_seconds(data.get("duration")),
-                        message_id=m_id,
-                        title=data.get("title")[:25],
-                        thumbnail=data.get("thumbnails", [{}])[-1]
-                        .get("url")
-                        .split("?")[0],
-                        url=data.get("link"),
-                        view_count=data.get("viewCount", {}).get("short"),
-                        video=video,
-                    )
+                    result = result_data.get("result")
+                    if result:
+                        data = result[0]
+                        return Track(
+                            id=data.get("id"),
+                            channel_name=data.get("channel", {}).get("name"),
+                            duration=data.get("duration"),
+                            duration_sec=utils.to_seconds(data.get("duration")),
+                            message_id=m_id,
+                            title=data.get("title")[:25],
+                            thumbnail=data.get("thumbnails", [{}])[-1].get("url").split("?")[0],
+                            url=data.get("link"),
+                            view_count=data.get("viewCount", {}).get("short"),
+                            video=video,
+                        )
         except Exception as e:
             logger.error(f"Error in search from API: {e}")
 
@@ -154,9 +153,7 @@ class YouTube:
             pass
         return None
 
-    async def playlist(
-        self, limit: int, user: str, url: str, video: bool
-    ) -> list[Track | None]:
+    async def playlist(self, limit: int, user: str, url: str, video: bool) -> list[Track | None]:
         url = self._clean_link(url)
         client = await self.get_client()
         params = {"link": url, "limit": limit}
@@ -166,26 +163,24 @@ class YouTube:
             async with client.get(f"{API_URL}/playlist", params=params) as response:
                 if response.status == 200:
                     data = await response.json()
-                videos = data.get("videos")
-                if videos:
-                    tracks = []
-                    for data in videos:
-                        track = Track(
-                            id=data.get("id"),
-                            channel_name=data.get("channel", {}).get("name", ""),
-                            duration=data.get("duration"),
-                            duration_sec=utils.to_seconds(data.get("duration")),
-                            title=data.get("title")[:25],
-                            thumbnail=data.get("thumbnails")[-1]
-                            .get("url")
-                            .split("?")[0],
-                            url=data.get("link").split("&list=")[0],
-                            user=user,
-                            view_count="",
-                            video=video,
-                        )
-                        tracks.append(track)
-                    return tracks
+                    videos = data.get("videos")
+                    if videos:
+                        tracks = []
+                        for data in videos:
+                            track = Track(
+                                id=data.get("id"),
+                                channel_name=data.get("channel", {}).get("name", ""),
+                                duration=data.get("duration"),
+                                duration_sec=utils.to_seconds(data.get("duration")),
+                                title=data.get("title")[:25],
+                                thumbnail=data.get("thumbnails")[-1].get("url").split("?")[0],
+                                url=data.get("link").split("&list=")[0],
+                                user=user,
+                                view_count="",
+                                video=video,
+                            )
+                            tracks.append(track)
+                        return tracks
         except Exception as e:
             logger.error(f"Error fetching playlist from API: {e}")
 
@@ -265,8 +260,7 @@ class YouTube:
                     videos = [
                         v
                         for v in videos
-                        if utils.to_seconds(v.get("duration") or "00:00")
-                        <= max_duration
+                        if utils.to_seconds(v.get("duration") or "00:00") <= max_duration
                     ]
 
                 if not videos:

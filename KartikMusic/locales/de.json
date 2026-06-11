@@ -172,19 +172,5 @@
     "autoplay_on": "<b>Autoplay enabled by</b> {0}\n\nFrom now on, the bot will automatically play related music once the queue is empty.",
     "add_mee": "Add me",
     "thumb_on": "Thumbnail enabled.",
-    "vclog_on": "<b>VC Logger enabled by</b> {0}",
-    "admin_33": "Failed to change the playback speed. Please try again.",
-    "admin_14": "You? Manage the video chat? Not with those permissions, sweetie.",
-    "admin_34": "Playback speed set to <b>{0}x</b> by {1}",
-    "general_5": "The bot is not streaming in the video chat.",
-    "P_B_4": "🕒 Normal",
-    "admin_28": "Select the playback speed for the ongoing stream of {0}",
-    "admin_13": "Failed to fetch the admin list.",
-    "admin_31": "Changing the playback speed...",
-    "admin_32": "<b>{0}</b> is changing the playback speed, please wait.",
-    "admin_27": "Only downloaded tracks can be played at different speeds.",
-    "admin_30": "Please wait for a moment before changing the playback speed.",
-    "admin_29": "The playback speed is already set to 1.0x",
-    "queue_2": "The bot is not streaming in the video chat.",
-    "CLOSE_BUTTON": "Close ✘"
+    "vclog_on": "<b>VC Logger enabled by</b> {0}"
 }

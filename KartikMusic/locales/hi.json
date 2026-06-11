@@ -172,19 +172,5 @@
     "help_11": "ऑटोप्ले",
     "help_thumb": "<u><b>थंबनेल आदेश:</b></u>\n\n/nothumb [enable|disable]: चैट के लिए थंबनेल चालू या बंद करें।",
     "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️",
-    "add_mee": "मुझे जोड़ें",
-    "admin_33": "Failed to change the playback speed. Please try again.",
-    "admin_14": "You? Manage the video chat? Not with those permissions, sweetie.",
-    "admin_34": "Playback speed set to <b>{0}x</b> by {1}",
-    "general_5": "The bot is not streaming in the video chat.",
-    "P_B_4": "🕒 Normal",
-    "admin_28": "Select the playback speed for the ongoing stream of {0}",
-    "admin_13": "Failed to fetch the admin list.",
-    "admin_31": "Changing the playback speed...",
-    "admin_32": "<b>{0}</b> is changing the playback speed, please wait.",
-    "admin_27": "Only downloaded tracks can be played at different speeds.",
-    "admin_30": "Please wait for a moment before changing the playback speed.",
-    "admin_29": "The playback speed is already set to 1.0x",
-    "queue_2": "The bot is not streaming in the video chat.",
-    "CLOSE_BUTTON": "Close ✘"
+    "add_mee": "मुझे जोड़ें"
 }

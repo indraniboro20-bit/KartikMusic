@@ -1,9 +1,10 @@
 import asyncio
-import importlib
 import signal
+import importlib
 from contextlib import suppress
 
-from KartikMusic import Kartik, app, config, db, logger, stop, thumb, userbot, yt
+from KartikMusic import (Kartik, app, config, db, logger,
+                   stop, thumb, userbot, yt)
 from KartikMusic.plugins import all_modules
 
 
@@ -15,7 +16,6 @@ async def idle():
         with suppress(NotImplementedError):
             loop.add_signal_handler(sig, stop_event.set)
     await stop_event.wait()
-
 
 async def main():
     await db.connect()

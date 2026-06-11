@@ -172,19 +172,4 @@
     "help_10": "VC Logger",
     "help_11": "Autoplay",
     "help_thumb": "<u><b>Thumbnail commands:</b></u>\n\n/nothumb [enable|disable]: Toggles the thumbnail off/on for the chat."
-, "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️",
-    "general_5": "The bot is not streaming in the video chat.",
-    "admin_13": "Failed to fetch the admin list.",
-    "admin_14": "You? Manage the video chat? Not with those permissions, sweetie.",
-    "admin_27": "Only downloaded tracks can be played at different speeds.",
-    "admin_28": "Select the playback speed for the ongoing stream of {0}",
-    "admin_29": "The playback speed is already set to 1.0x",
-    "admin_30": "Please wait for a moment before changing the playback speed.",
-    "admin_31": "Changing the playback speed...",
-    "admin_32": "<b>{0}</b> is changing the playback speed, please wait.",
-    "admin_33": "Failed to change the playback speed. Please try again.",
-    "admin_34": "Playback speed set to <b>{0}x</b> by {1}",
-    "P_B_4": "🕒 Normal",
-    "CLOSE_BUTTON": "Close ✘",
-    "queue_2": "The bot is not streaming in the video chat."
-}
+, "queue_finished": "🎵𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs.⚡️"}

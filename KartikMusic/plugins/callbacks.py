@@ -6,7 +6,6 @@
 import os
 import re
 import time
-
 import aiohttp
 from pyrogram import enums, errors, filters, types
 
@@ -113,10 +112,12 @@ async def _controls(_, query: types.CallbackQuery):
 
         media = queue.get_current(chat_id)
         if not media or not media.duration_sec:
-            return await query.answer(query.lang["play_seek_no_dur"], show_alert=True)
+            return await query.answer(
+                query.lang["play_seek_no_dur"], show_alert=True
+            )
 
         to_seek = int(args[3])
-        current_pos = int((time.time() - media.played_at) * media.speed + media.time)
+        current_pos = int((time.time() - media.played_at) + media.time)
         new_pos = current_pos + to_seek
 
         if new_pos < 1:
@@ -126,7 +127,9 @@ async def _controls(_, query: types.CallbackQuery):
 
         await Kartik.play_media(chat_id, query.message, media, new_pos)
         media.time = new_pos
-        return await query.answer(f"Seeked to {new_pos}s", show_alert=True)
+        return await query.answer(
+            f"Seeked to {new_pos}s", show_alert=True
+        )
 
     elif action == "close":
         try:
@@ -229,16 +232,14 @@ async def song_download_cb(_, query: types.CallbackQuery):
     try:
         await query.edit_message_caption(
             caption=f"{query.message.caption}\n\n<b>Downloading...</b>",
-            reply_markup=query.message.reply_markup,
+            reply_markup=query.message.reply_markup
         )
     except Exception:
         pass
 
     url = await yt.download(vid_id, video=dl_type == "video")
     if not url:
-        return await query.message.reply_text(
-            query.lang["error_no_file"].format("support chat")
-        )
+        return await query.message.reply_text(query.lang["error_no_file"].format("support chat"))
 
     file_path = None
     if not url.startswith(("http://", "https://")):
@@ -262,22 +263,22 @@ async def song_download_cb(_, query: types.CallbackQuery):
         media_to_send = file_path if file_path else url
         if dl_type == "audio":
             await query.message.reply_audio(
-                audio=media_to_send, caption=f"<b>Downloaded via {app.name}</b>"
+                audio=media_to_send,
+                caption=f"<b>Downloaded via {app.name}</b>"
             )
         else:
             await query.message.reply_video(
-                video=media_to_send, caption=f"<b>Downloaded via {app.name}</b>"
+                video=media_to_send,
+                caption=f"<b>Downloaded via {app.name}</b>"
             )
 
         # Cleanup status message
         await query.edit_message_caption(
             caption=query.message.caption.split("\n\n<b>Downloading...</b>")[0],
-            reply_markup=query.message.reply_markup,
+            reply_markup=query.message.reply_markup
         )
     except Exception as e:
-        await query.message.reply_text(
-            f"<b>Failed to send file.</b>\n\n<b>Error:</b> <code>{e}</code>"
-        )
+        await query.message.reply_text(f"<b>Failed to send file.</b>\n\n<b>Error:</b> <code>{e}</code>")
     finally:
         if file_path and os.path.exists(file_path):
             os.remove(file_path)
