@@ -1,14 +1,6 @@
-# Copyright (c) 2025 AnonymousX1025
-# Licensed under the MIT License.
-# This file is part of AnonXMusic
-
-
 import os
-
 from pyrogram import filters, types
-
-from anony import app, db, lang, queue
-
+from KartikMusic import app, db, lang, queue
 
 @app.on_message(filters.command(["ac", "activevc"]) & app.sudoers)
 @lang.language()
