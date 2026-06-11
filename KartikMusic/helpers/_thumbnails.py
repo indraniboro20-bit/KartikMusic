@@ -3,11 +3,11 @@
 # This file is part of KartikMusic
 
 
-import os
 import asyncio
+import os
+
 import aiohttp
-from PIL import (Image, ImageDraw, ImageEnhance,
-                 ImageFilter, ImageFont, ImageOps)
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 
 from KartikMusic import config
 from KartikMusic.helpers import Track
@@ -39,15 +39,22 @@ class Thumbnail:
         return output_path
 
     def _draw_image(self, temp, output, song: Track, size=(1280, 720)):
-        thumb = Image.open(temp).convert("RGBA").resize(
-            size, Image.Resampling.LANCZOS,
+        thumb = (
+            Image.open(temp)
+            .convert("RGBA")
+            .resize(
+                size,
+                Image.Resampling.LANCZOS,
+            )
         )
         blur = thumb.filter(ImageFilter.GaussianBlur(25))
-        image = ImageEnhance.Brightness(blur).enhance(.40)
+        image = ImageEnhance.Brightness(blur).enhance(0.40)
 
         _rect = ImageOps.fit(
-            thumb, self.rect,
-            method=Image.LANCZOS, centering=(0.5, 0.5),
+            thumb,
+            self.rect,
+            method=Image.LANCZOS,
+            centering=(0.5, 0.5),
         )
         mask = Image.new("L", self.rect, 0)
         ImageDraw.Draw(mask).rounded_rectangle(
@@ -62,12 +69,17 @@ class Thumbnail:
         draw.text(
             xy=(50, 560),
             text=f"{(song.channel_name or 'Unknown')[:25]} | {song.view_count or 0}",
-            font=self.font2, fill=self.fill,
+            font=self.font2,
+            fill=self.fill,
         )
-        draw.text((50, 600), (song.title or "Unknown")[:50], font=self.font1, fill=self.fill)
+        draw.text(
+            (50, 600), (song.title or "Unknown")[:50], font=self.font1, fill=self.fill
+        )
         draw.text((40, 650), "0:01", font=self.font1)
         draw.line([(140, 670), (1160, 670)], fill=self.fill, width=5, joint="curve")
-        draw.text((1185, 650), song.duration or "00:00", font=self.font1, fill=self.fill)
+        draw.text(
+            (1185, 650), song.duration or "00:00", font=self.font1, fill=self.fill
+        )
 
         image.save(output)
         return output

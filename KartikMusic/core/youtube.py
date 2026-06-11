@@ -3,16 +3,14 @@
 # This file is part of KartikMusic
 
 
-import os
-import re
-import random
 import asyncio
-import aiohttp
+import os
+import random
+import re
 import urllib.parse
-from pathlib import Path
-from typing import Union
 
-from py_yt import Playlist, VideosSearch, Recommendations
+import aiohttp
+from py_yt import Playlist, Recommendations, VideosSearch
 
 from KartikMusic import logger
 from KartikMusic.helpers import Track, utils
@@ -123,7 +121,9 @@ class YouTube:
                             duration_sec=utils.to_seconds(data.get("duration")),
                             message_id=m_id,
                             title=data.get("title")[:25],
-                            thumbnail=data.get("thumbnails", [{}])[-1].get("url").split("?")[0],
+                            thumbnail=data.get("thumbnails", [{}])[-1]
+                            .get("url")
+                            .split("?")[0],
                             url=data.get("link"),
                             view_count=data.get("viewCount", {}).get("short"),
                             video=video,
@@ -153,7 +153,9 @@ class YouTube:
             pass
         return None
 
-    async def playlist(self, limit: int, user: str, url: str, video: bool) -> list[Track | None]:
+    async def playlist(
+        self, limit: int, user: str, url: str, video: bool
+    ) -> list[Track | None]:
         url = self._clean_link(url)
         client = await self.get_client()
         params = {"link": url, "limit": limit}
@@ -173,7 +175,9 @@ class YouTube:
                                 duration=data.get("duration"),
                                 duration_sec=utils.to_seconds(data.get("duration")),
                                 title=data.get("title")[:25],
-                                thumbnail=data.get("thumbnails")[-1].get("url").split("?")[0],
+                                thumbnail=data.get("thumbnails")[-1]
+                                .get("url")
+                                .split("?")[0],
                                 url=data.get("link").split("&list=")[0],
                                 user=user,
                                 view_count="",
@@ -260,7 +264,8 @@ class YouTube:
                     videos = [
                         v
                         for v in videos
-                        if utils.to_seconds(v.get("duration") or "00:00") <= max_duration
+                        if utils.to_seconds(v.get("duration") or "00:00")
+                        <= max_duration
                     ]
 
                 if not videos:

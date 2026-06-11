@@ -7,8 +7,8 @@ import io
 import os
 import re
 import sys
-import uuid
 import traceback
+import uuid
 from html import escape
 from typing import Any, Optional, Tuple
 

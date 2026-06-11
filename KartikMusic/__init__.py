@@ -1,6 +1,6 @@
-import time
 import asyncio
 import logging
+import time
 from logging.handlers import RotatingFileHandler
 
 logging.basicConfig(
@@ -30,30 +30,38 @@ tasks = []
 boot = time.time()
 
 from KartikMusic.core.bot import Bot
+
 app = Bot()
 
 from KartikMusic.core.dir import ensure_dirs
+
 ensure_dirs()
 
 from KartikMusic.core.userbot import Userbot
+
 userbot = Userbot()
 
 from KartikMusic.core.mongo import MongoDB
+
 db = MongoDB()
 
 from KartikMusic.core.lang import Language
+
 lang = Language()
 
 from KartikMusic.core.telegram import Telegram
 from KartikMusic.core.youtube import YouTube
+
 tg = Telegram()
 yt = YouTube()
 
 from KartikMusic.helpers import Queue, Thumbnail
+
 queue = Queue()
 thumb = Thumbnail()
 
 from KartikMusic.core.calls import TgCall
+
 Kartik = TgCall()
 
 

@@ -3,15 +3,15 @@
 # This file is part of KartikMusic
 
 
-import os
 import asyncio
+import os
 
 from pyrogram import errors, filters, types
 
 from KartikMusic import app, db, lang
 
-
 broadcasting = asyncio.Lock()
+
 
 @app.on_message(filters.command(["broadcast"]) & app.sudoers)
 @lang.language()
@@ -64,7 +64,9 @@ async def _broadcast(_, message: types.Message):
             document="errors.txt",
             caption=text,
         )
-        try: os.remove("errors.txt")
-        except Exception: pass
+        try:
+            os.remove("errors.txt")
+        except Exception:
+            pass
 
     await sent.edit_text(text)
