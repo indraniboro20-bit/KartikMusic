@@ -16,10 +16,6 @@ readme = ".github/README.md"
 requires-python = ">=3.10"
 keywords = ["telegram", "music-bot", "voice-chat", "python", "pyrogram", "kartik-music"]
 
-[project.urls]
-Homepage = "https://github.com/TheAloneTeam/KartikMusic"
-Repository = "https://github.com/TheAloneTeam/KartikMusic"
-
 dependencies = [
     "aiohttp~=3.14.0",
     "kurigram>=2.2.21",
@@ -32,3 +28,7 @@ dependencies = [
     "python-dotenv~=1.2.1",
     "yt-dlp[default]>=2026.3.17",
 ]
+
+[project.urls]
+Homepage = "https://github.com/TheAloneTeam/KartikMusic"
+Repository = "https://github.com/TheAloneTeam/KartikMusic"
