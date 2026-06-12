@@ -15,9 +15,8 @@ from pyrogram import enums, errors, types
 from KartikMusic import app, config, db, logger, queue, yt
 from KartikMusic.helpers import utils
 
-
 def checkUB(play):
-    async def wrapper(_, m: types.Message):
+    async def wrapper(_, m: types.Message, *args, **kwargs):
         if not m.from_user:
             return await m.reply_text(m.lang["play_user_invalid"])
 
@@ -36,16 +35,16 @@ def checkUB(play):
                 m.lang["play_queue_full"].format(config.QUEUE_LIMIT)
             )
 
-        force = m.command[0].endswith("force") or (
+        force = kwargs.get("force") or m.command[0].endswith("force") or (
             len(m.command) > 1 and "-f" in m.command[1]
         )
-        video = m.command[0][0] == "v" and config.VIDEO_PLAY
-        url = utils.get_url(m)
+        video = kwargs.get("video") or (m.command[0][0] == "v" and config.VIDEO_PLAY)
+        url = kwargs.get("url") or utils.get_url(m)
         if url and yt.invalid(url):
             return await m.reply_text(
                 m.lang["play_not_found"].format(config.SUPPORT_CHAT)
             )
-        m3u8 = url and not yt.valid(url)
+        m3u8 = kwargs.get("m3u8") or (url and not yt.valid(url))
 
         play_mode = await db.get_play_mode(chat_id)
         if play_mode or force:
@@ -131,6 +130,6 @@ def checkUB(play):
             except Exception:
                 pass
 
-        return await play(_, m, force, m3u8, video, url)
+        return await play(_, m, force=force, m3u8=m3u8, video=video, url=url)
 
     return wrapper
