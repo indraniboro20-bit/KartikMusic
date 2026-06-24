@@ -27,15 +27,15 @@ class Config:
         self.OWNER_ID = int(getenv("OWNER_ID", 0))
 
         self.DURATION_LIMIT = int(getenv("DURATION_LIMIT", 300)) * 300
-        self.QUEUE_LIMIT = int(getenv("QUEUE_LIMIT", 20))
-        self.PLAYLIST_LIMIT = int(getenv("PLAYLIST_LIMIT", 20))
+        self.QUEUE_LIMIT = int(getenv("QUEUE_LIMIT", 25))
+        self.PLAYLIST_LIMIT = int(getenv("PLAYLIST_LIMIT", 25))
 
         self.SESSION1 = getenv("SESSION", None)
         self.SESSION2 = getenv("SESSION2", None)
         self.SESSION3 = getenv("SESSION3", None)
 
-        self.SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/meowqti")
-        self.SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/Thealoneteam")
+        self.SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/ABOUT_ROLEX_ANU")
+        self.SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+91aOX5qWDBZiM2E0")
 
         self.AUTO_LEAVE: bool = getenv("AUTO_LEAVE", "False").lower() == "true"
         self.AUTO_END: bool = getenv("AUTO_END", "False").lower() == "true"
