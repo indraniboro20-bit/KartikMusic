@@ -118,7 +118,7 @@
     "restarting": "Restarting...",
     "restarted": "Restart in progress. Don't worry, it'll only take a few seconds… maybe.",
     "start_pm": "<blockquote><b>нєу ʙᴀʙʏ</b> {0}, 🥀</blockquote>\n<blockquote expandable><b>๏ ᴛʜɪs ɪs {1} : ғᴀsᴛ & ᴘᴏᴡᴇʀғᴜʟ ᴛɢ ᴍᴜsɪᴄ ʙᴏᴛ.</b>\n<b>๏ sᴍᴏᴏᴛʜ ʙᴇᴀᴛs • sᴛᴀʙʟᴇ & sᴇᴀᴍʟᴇss ᴍᴜsɪᴄ ғʟᴏᴡ.</b>\n<b>๏ ɴᴇᴡ ᴠᴇʀsɪᴏɴ ᴡɪᴛʜ sᴜᴘᴇʀ ғᴀsᴛ ʏᴏᴜᴛᴜʙᴇ ᴀᴘɪ ʙᴀsᴇᴅ.</b>\n<b>•── ⋅ ⋅ ⋅ ────── ⋅  ⋅ ────── ⋅ ⋅ ⋅ ──•</b>\n<b>๏ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʜᴇʟᴩ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴍʏ ᴍᴏᴅᴜʟᴇs ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅs.</b></blockquote>",
-    "start_gp": "Hey,\nThis is {0}\n\n<u><b>A music player bot with some awesome and useful features.</b></u>",
+    "start_gp": "<blockquote><b>нєу ʙᴀʙʏ</b> {0}, 🥀</blockquote>\n<blockquote expandable><b>๏ ᴛʜɪs ɪs {1} : ғᴀsᴛ & ᴘᴏᴡᴇʀғᴜʟ ᴛɢ ᴍᴜsɪᴄ ʙᴏᴛ.</b>\n<b>๏ sᴍᴏᴏᴛʜ ʙᴇᴀᴛs • sᴛᴀʙʟᴇ & sᴇᴀᴍʟᴇss ᴍᴜsɪᴄ ғʟᴏᴡ.</b>\n<b>๏ ɴᴇᴡ ᴠᴇʀsɪᴏɴ ᴡɪᴛʜ sᴜᴘᴇʀ ғᴀsᴛ ʏᴏᴜᴛᴜʙᴇ ᴀᴘɪ ʙᴀsᴇᴅ.</b>\n<b>•── ⋅ ⋅ ⋅ ────── ⋅  ⋅ ────── ⋅ ⋅ ⋅ ──•</b>\n<b>๏ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʜᴇʟᴩ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴍʏ ᴍᴏᴅᴜʟᴇs ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅs.</b></blockquote>",
     "start_settings": "<u><b>{0} settings</b></u>\n\nClick the buttons below to change this chat's current settings.",
     "stats_fetching": "Fetching stats...",
     "stats_sudo": "\n\n<b>Modules:</b> {0}\n<b>Platform:</b> {1}\n<b>Ram usage:</b> <code>{2}MB | {3}GB</code>\n<b>CPU usage:</b> <code>{4}% ({5} cores)</code>\n<b>Storage:</b> <code>{6}GB | {7}GB</code>\n\n<b>Python:</b> <code>v{8}</code>\n<b>Pyrogram:</b> <code>v{9}</code>\n<b>PyTgCalls:</b> <code>v{10}</code>",
